@@ -1,0 +1,15 @@
+name: Keep backend warm
+
+# Render's free tier sleeps after 15 min idle (slow cold start). This pings the
+# health endpoint every ~10 min so the API stays awake during the day.
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch: {}   # lets you run it manually from the Actions tab
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping API health
+        run: curl -s -m 60 https://gt-garage-api.onrender.com/health || true

@@ -54,6 +54,7 @@ textarea { resize: vertical; min-height: 120px; }
   color: var(--steel-300);
   text-align: center;
 }
+.fineprint.slow { color: var(--blue-deep); font-weight: 600; }
 
 /* ── SUCCESS STATE ────────────────────────────────────────────────────── */
 .success { text-align: center; padding: 48px 24px; }

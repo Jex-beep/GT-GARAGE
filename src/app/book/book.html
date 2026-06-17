@@ -80,7 +80,11 @@
           <button type="submit" class="btn btn-primary submit-btn" [disabled]="sending()">
             {{ sending() ? 'Sending…' : 'Send booking request' }}
           </button>
-          <p class="fineprint">We only use your details to handle this booking.</p>
+          @if (slowHint()) {
+            <p class="fineprint slow">Just waking up our server — hang tight, this can take a few seconds…</p>
+          } @else {
+            <p class="fineprint">We only use your details to handle this booking.</p>
+          }
         </form>
       }
     </div>

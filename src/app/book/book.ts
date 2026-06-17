@@ -20,6 +20,7 @@ export class Book implements OnInit {
   };
   today = new Date().toISOString().split('T')[0];
   sending = signal(false);
+  slowHint = signal(false);
   done = signal(false);
   error = signal('');
   lastName = signal('');
@@ -68,6 +69,8 @@ export class Book implements OnInit {
     const problem = this.validate();
     if (problem) { this.error.set(problem); return; }
     this.sending.set(true);
+    // If the (free-tier) server is waking up, reassure the customer after a few seconds
+    const slowTimer = setTimeout(() => this.slowHint.set(true), 5000);
     try {
       const token = await this.getToken();
       const res = await this.api.createBooking({ ...this.model, recaptcha_token: token });
@@ -77,7 +80,9 @@ export class Book implements OnInit {
     } catch (e: any) {
       this.error.set(e.message || 'Something went wrong. Please try again.');
     } finally {
+      clearTimeout(slowTimer);
       this.sending.set(false);
+      this.slowHint.set(false);
     }
   }
 

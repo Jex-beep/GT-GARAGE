@@ -87,6 +87,11 @@ export class ApiService {
     return res.json();
   }
 
+  /** Fire-and-forget ping so a sleeping (free-tier) backend starts waking early. */
+  warmup(): void {
+    fetch(`${this.base}/health`).catch(() => {});
+  }
+
   // Public blog list — backend returns published posts only when no token is sent
   async getPostsPublic(): Promise<BlogPost[]> {
     const res = await fetch(`${this.base}/api/posts`);

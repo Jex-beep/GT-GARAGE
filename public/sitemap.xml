@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Replace https://gtgarage.ph with your real domain after you deploy.
+  Replace https://gt-garage.vercel.app with your real domain after you deploy.
   Blog posts have their own URLs at /blogs/<slug> — add them here as you publish,
   or generate this file from the backend (see backend/src/server.js GET /sitemap.xml).
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://gtgarage.ph/</loc>
+    <loc>https://gt-garage.vercel.app/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://gtgarage.ph/services</loc>
+    <loc>https://gt-garage.vercel.app/services</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://gtgarage.ph/about</loc>
+    <loc>https://gt-garage.vercel.app/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://gtgarage.ph/book</loc>
+    <loc>https://gt-garage.vercel.app/book</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://gtgarage.ph/blogs</loc>
+    <loc>https://gt-garage.vercel.app/blogs</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

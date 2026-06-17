@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin
 Disallow: /track
 
-Sitemap: https://gtgarage.ph/sitemap.xml
+Sitemap: https://gt-garage.vercel.app/sitemap.xml

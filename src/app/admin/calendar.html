@@ -1,0 +1,91 @@
+<div class="cal-bar">
+  <div>
+    <h2>Calendar</h2>
+    <span class="count">Confirmed bookings appear here automatically. Click any day to add your own tasks.</span>
+  </div>
+  <div class="cal-nav">
+    <button class="cal-arrow" (click)="prevMonth()" aria-label="Previous month">‹</button>
+    <span class="cal-month">{{ monthLabel() }}</span>
+    <button class="cal-arrow" (click)="nextMonth()" aria-label="Next month">›</button>
+    <button class="cal-today" (click)="goToday()">Today</button>
+  </div>
+</div>
+
+@if (error()) { <p class="err">{{ error() }}</p> }
+
+@if (loading()) {
+  <p class="muted">Loading calendar…</p>
+} @else {
+  <div class="cal-grid">
+    @for (wd of weekdays; track wd) { <div class="cal-wd">{{ wd }}</div> }
+
+    @for (week of weeks(); track $index) {
+      @for (cell of week; track cell.date) {
+        <button class="cal-cell"
+          [class.out]="!cell.inMonth"
+          [class.today]="cell.isToday"
+          (click)="selectDay(cell.date)">
+          <span class="cal-d">{{ cell.day }}</span>
+          <div class="cal-chips">
+            @for (t of cell.tasks.slice(0, 3); track t.id) {
+              <span class="chip" [class.done]="t.done">{{ t.title }}</span>
+            }
+            @if (cell.tasks.length > 3) {
+              <span class="chip more">+{{ cell.tasks.length - 3 }} more</span>
+            }
+          </div>
+        </button>
+      }
+    }
+  </div>
+}
+
+<!-- ══ DAY PANEL ════════════════════════════════════════════════════════ -->
+@if (selectedDate()) {
+  <div class="modal-backdrop" (click)="closeDay()">
+    <div class="day-modal" (click)="$event.stopPropagation()">
+      <div class="day-head">
+        <h3>{{ selectedDateLabel() }}</h3>
+        <button class="day-x" (click)="closeDay()" aria-label="Close">✕</button>
+      </div>
+
+      @if (selectedTasks().length) {
+        <div class="day-tasks">
+          @for (t of selectedTasks(); track t.id) {
+            <div class="day-task" [class.is-done]="t.done">
+              <label class="dt-check">
+                <input type="checkbox" [checked]="t.done" (change)="toggleDone(t)">
+              </label>
+              <div class="dt-main">
+                <strong>{{ t.title }}</strong>
+                @if (t.notes) { <p>{{ t.notes }}</p> }
+              </div>
+              <div class="dt-actions">
+                <button (click)="startEdit(t)">Edit</button>
+                <button class="danger" (click)="removeTask(t)">Delete</button>
+              </div>
+            </div>
+          }
+        </div>
+      } @else {
+        <p class="muted day-empty">No tasks on this day yet.</p>
+      }
+
+      <div class="day-form">
+        <h4>{{ form.id ? 'Edit task' : 'Add a task' }}</h4>
+        <input name="ctitle" [(ngModel)]="form.title" placeholder="Task title (e.g. Order brake pads)">
+        <textarea name="cnotes" [(ngModel)]="form.notes" rows="2" placeholder="Notes (optional)"></textarea>
+        <label class="done-toggle">
+          <input type="checkbox" name="cdone" [(ngModel)]="form.done"> Mark as done
+        </label>
+        @if (error()) { <p class="err">{{ error() }}</p> }
+        <div class="day-form-actions">
+          <button class="save" (click)="saveTask()" [disabled]="saving()">
+            {{ saving() ? 'Saving…' : (form.id ? 'Update task' : 'Add task') }}
+          </button>
+          @if (form.id) { <button class="cancel" (click)="resetForm()">Cancel edit</button> }
+        </div>
+      </div>
+    </div>
+  </div>
+}

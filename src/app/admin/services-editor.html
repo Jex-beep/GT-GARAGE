@@ -1,0 +1,69 @@
+<div class="ed-bar">
+  <div>
+    <h2>Services</h2>
+    <span class="count">{{ items().length }} service{{ items().length === 1 ? '' : 's' }} shown on the website</span>
+  </div>
+  @if (!showForm()) {
+    <button class="btn-add" (click)="startAdd()">+ Add service</button>
+  }
+</div>
+
+@if (error()) { <p class="err">{{ error() }}</p> }
+
+@if (showForm()) {
+  <div class="ed-form">
+    <h3>{{ editingId() ? 'Edit service' : 'New service' }}</h3>
+    <div class="ed-grid">
+      <div class="ed-field full">
+        <label for="sname">Service name</label>
+        <input id="sname" name="sname" [(ngModel)]="form.name" placeholder="e.g. Brake Service">
+      </div>
+      <div class="ed-field full">
+        <label>Description</label>
+        <app-rich-editor [value]="form.description" (valueChange)="form.description = $event" [compact]="true"
+          placeholder="What this service covers, in plain terms." />
+      </div>
+      <div class="ed-field">
+        <label for="sprice">Price from</label>
+        <input id="sprice" name="sprice" [(ngModel)]="form.price_from" placeholder="Ask us / ₱1,500">
+      </div>
+      <div class="ed-field">
+        <label for="ssort">Sort order <span class="hint">(lower shows first)</span></label>
+        <input id="ssort" name="ssort" type="number" [(ngModel)]="form.sort_order">
+      </div>
+      <div class="ed-field full">
+        <label>Service image <span class="hint">(optional)</span></label>
+        <app-image-upload [value]="form.image_url" (valueChange)="form.image_url = $event" />
+      </div>
+    </div>
+    <div class="ed-form-actions">
+      <button class="save" (click)="save()" [disabled]="saving()">{{ saving() ? 'Saving…' : 'Save service' }}</button>
+      <button class="cancel" (click)="cancel()" [disabled]="saving()">Cancel</button>
+    </div>
+  </div>
+}
+
+@if (loading()) {
+  <p class="muted">Loading services…</p>
+} @else if (items().length) {
+  <div class="ed-list">
+    @for (s of items(); track s.id) {
+      <div class="ed-row">
+        <div class="ed-row-main">
+          <h3>{{ s.name }}</h3>
+          <p>{{ plain(s.description) }}</p>
+          <div class="ed-meta">
+            <span class="ed-tag price">{{ s.price_from }}</span>
+            <span class="muted">Sort: {{ s.sort_order }}</span>
+          </div>
+        </div>
+        <div class="ed-actions">
+          <button class="btn-mini" (click)="startEdit(s)">Edit</button>
+          <button class="btn-mini danger" (click)="remove(s)">Delete</button>
+        </div>
+      </div>
+    }
+  </div>
+} @else {
+  <p class="muted">No services yet. Click “Add service” to create your first one.</p>
+}

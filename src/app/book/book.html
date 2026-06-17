@@ -1,0 +1,122 @@
+<section class="page-hero">
+  <div class="wrap">
+    <span class="eyebrow">Book a service</span>
+    <h1>Tell us what's going on</h1>
+    <p>Describe the problem in your own words and pick a time. We'll call to confirm — usually the same day.</p>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap book-layout">
+
+    <!-- ── FORM ─────────────────────────────────────────────────────── -->
+    <div class="form-shell" appReveal>
+      @if (done()) {
+        <div class="success">
+          <div class="check">✓</div>
+          <h2>Booking received</h2>
+          <p>Salamat, {{ lastName() }}! We got your request. Glen will review it and confirm your slot soon.</p>
+
+          <div class="ref-box">
+            <span class="ref-label">Your booking reference</span>
+            <span class="ref-code">#{{ reference }}</span>
+          </div>
+
+          <p class="track-tip">Track your booking status anytime — just save this link or use your email &amp; phone on the tracking page.</p>
+
+          <div class="track-link">
+            <input type="text" [value]="trackUrl" readonly (click)="$any($event.target).select()">
+            <button class="btn-copy" (click)="copyLink()">{{ copied() ? 'Copied ✓' : 'Copy' }}</button>
+          </div>
+
+          <div class="success-actions">
+            <a [routerLink]="['/track', bookingId()]" class="btn btn-primary">Track my booking</a>
+            <button class="btn btn-ghost dark" (click)="reset()">Book another</button>
+          </div>
+        </div>
+      } @else {
+        <form (ngSubmit)="submit()" #f="ngForm" novalidate>
+          <div class="grid">
+            <div class="field">
+              <label for="name">Your name</label>
+              <input id="name" name="name" [(ngModel)]="model.customer_name"
+                autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="phone">Mobile number</label>
+              <input id="phone" name="phone" [(ngModel)]="model.phone"
+                placeholder="09XXXXXXXXX" autocomplete="tel" inputmode="tel" required>
+            </div>
+            <div class="field">
+              <label for="email">Email address</label>
+              <input id="email" name="email" type="email" [(ngModel)]="model.email"
+                autocomplete="email" required>
+            </div>
+            <div class="field">
+              <label for="date">Preferred date</label>
+              <input id="date" name="date" type="date" [(ngModel)]="model.preferred_date"
+                [min]="today" required>
+            </div>
+            <div class="field full">
+              <label for="slot">Preferred time slot</label>
+              <select id="slot" name="slot" [(ngModel)]="model.time_slot" required>
+                <option value="" disabled selected>Choose a slot</option>
+                <option value="08:00-10:00">8:00 – 10:00 AM</option>
+                <option value="10:00-12:00">10:00 AM – 12:00 NN</option>
+                <option value="13:00-15:00">1:00 – 3:00 PM</option>
+                <option value="15:00-17:00">3:00 – 5:00 PM</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label for="problem">What's the problem?</label>
+              <textarea id="problem" name="problem" rows="5" [(ngModel)]="model.problem"
+                placeholder="e.g. Aircon isn't cold anymore, and there's a clicking sound when I turn left."
+                required></textarea>
+            </div>
+          </div>
+
+          @if (error()) { <p class="err" role="alert">{{ error() }}</p> }
+
+          <button type="submit" class="btn btn-primary submit-btn" [disabled]="sending()">
+            {{ sending() ? 'Sending…' : 'Send booking request' }}
+          </button>
+          <p class="fineprint">We only use your details to handle this booking.</p>
+        </form>
+      }
+    </div>
+
+    <!-- ── TRUST SIDEBAR ─────────────────────────────────────────────── -->
+    <aside class="trust-panel" appReveal>
+      <h3>Why GT Garage?</h3>
+
+      <ul class="trust-list">
+        <li>
+          <strong>Diagnose first</strong>
+          <p>We scan and inspect before touching anything. You only pay for what your car actually needs.</p>
+        </li>
+        <li>
+          <strong>Clear pricing</strong>
+          <p>We explain what we found and the cost before we start. No surprise bill at the end.</p>
+        </li>
+        <li>
+          <strong>Same-day confirmation</strong>
+          <p>Glen reviews bookings and confirms your slot — usually within a few hours.</p>
+        </li>
+        <li>
+          <strong>All makes &amp; models</strong>
+          <p>Sedans, SUVs, AUVs, pick-ups — bring it in and we'll take a look.</p>
+        </li>
+      </ul>
+
+      <div class="trust-photo">
+        <img src="/man-fixing-a-car.jpg" alt="GT Garage technician at work" loading="lazy">
+      </div>
+
+      <div class="maya-block">
+        <span>We accept</span>
+        <strong>Cash · Maya</strong>
+      </div>
+    </aside>
+
+  </div>
+</section>

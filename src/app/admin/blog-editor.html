@@ -1,0 +1,82 @@
+<div class="ed-bar">
+  <div>
+    <h2>Blog</h2>
+    <span class="count">{{ items().length }} post{{ items().length === 1 ? '' : 's' }} · drafts stay hidden from visitors</span>
+  </div>
+  @if (!showForm()) {
+    <button class="btn-add" (click)="startAdd()">+ Write post</button>
+  }
+</div>
+
+@if (error()) { <p class="err">{{ error() }}</p> }
+
+@if (showForm()) {
+  <div class="ed-form">
+    <h3>{{ editingId() ? 'Edit post' : 'New post' }}</h3>
+    <div class="ed-grid">
+      <div class="ed-field full">
+        <label for="ptitle">Title</label>
+        <input id="ptitle" name="ptitle" [(ngModel)]="form.title" (ngModelChange)="onTitle()"
+          placeholder="e.g. 5 signs your brakes need attention">
+      </div>
+      <div class="ed-field">
+        <label for="pslug">Slug <span class="hint">(URL-friendly id)</span></label>
+        <input id="pslug" name="pslug" [(ngModel)]="form.slug" placeholder="brake-warning-signs">
+      </div>
+      <div class="ed-field">
+        <label>Cover image <span class="hint">(optional)</span></label>
+        <app-image-upload [value]="form.cover_url" (valueChange)="form.cover_url = $event" />
+      </div>
+      <div class="ed-field full">
+        <label for="pexc">Excerpt <span class="hint">(short summary on the blog list)</span></label>
+        <textarea id="pexc" name="pexc" [(ngModel)]="form.excerpt" rows="2"
+          placeholder="A one or two sentence teaser."></textarea>
+      </div>
+      <div class="ed-field full">
+        <label>Body</label>
+        <app-rich-editor [value]="form.body" (valueChange)="form.body = $event"
+          placeholder="Write the full post here. Use the toolbar to format text and add images." />
+      </div>
+      <div class="ed-field full">
+        <label class="ed-toggle">
+          <input type="checkbox" name="ppub" [(ngModel)]="form.published">
+          <span>Published <span class="hint">— unchecked keeps it a draft (hidden from visitors)</span></span>
+        </label>
+      </div>
+    </div>
+    <div class="ed-form-actions">
+      <button class="save" (click)="save()" [disabled]="saving()">{{ saving() ? 'Saving…' : 'Save post' }}</button>
+      <button class="cancel" (click)="cancel()" [disabled]="saving()">Cancel</button>
+    </div>
+  </div>
+}
+
+@if (loading()) {
+  <p class="muted">Loading posts…</p>
+} @else if (items().length) {
+  <div class="ed-list">
+    @for (p of items(); track p.id) {
+      <div class="ed-row" [class.is-draft]="!p.published_at">
+        <div class="ed-row-main">
+          <h3>{{ p.title }}</h3>
+          <p>{{ p.excerpt }}</p>
+          <div class="ed-meta">
+            @if (p.published_at) {
+              <span class="ed-tag pub">Published</span>
+              <span class="muted">{{ formatDate(p.published_at) }}</span>
+            } @else {
+              <span class="ed-tag draft">Draft</span>
+            }
+            <span class="muted">/{{ p.slug }}</span>
+          </div>
+        </div>
+        <div class="ed-actions">
+          <button class="btn-mini" (click)="startEdit(p)">Edit</button>
+          <button class="btn-mini danger" (click)="remove(p)">Delete</button>
+        </div>
+      </div>
+    }
+  </div>
+} @else {
+  <p class="muted">No posts yet. Click “Write post” to publish your first one.</p>
+}

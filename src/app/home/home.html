@@ -1,0 +1,250 @@
+<!-- ═══ HERO ═══════════════════════════════════════════════════════════ -->
+<section class="hero" aria-label="GT Garage — Auto Repair in Mabalacat">
+  <div class="hero-bg" aria-hidden="true">
+    <img src="/gt-garrage-office.jpg" alt="" class="hero-photo" fetchpriority="high">
+    <div class="hero-overlay"></div>
+    <div class="hero-glow"></div>
+  </div>
+
+  <div class="wrap hero-inner">
+    <div class="hero-copy">
+      <span class="hero-eyebrow ani-in" style="--d:0ms">Mabalacat · Pampanga · Since 2021</span>
+      <h1 class="ani-in" style="--d:120ms">
+        Your car,<br><span class="accent">dialed in.</span>
+      </h1>
+      <p class="ani-in" style="--d:240ms">
+        Honest diagnostics, clean work, fair pricing. We fix what needs fixing — and tell you straight about the rest.
+      </p>
+      <div class="hero-actions ani-in" style="--d:360ms">
+        <a routerLink="/book" class="btn btn-primary">Book a service</a>
+        <a routerLink="/services" class="btn btn-ghost">See what we do</a>
+      </div>
+      <div class="hero-trust ani-in" style="--d:480ms">
+        <div class="ht-item"><strong>9.5K+</strong><span>Followers</span></div>
+        <div class="ht-divider"></div>
+        <div class="ht-item"><strong>5★</strong><span>Rated by locals</span></div>
+        <div class="ht-divider"></div>
+        <div class="ht-item"><strong>All</strong><span>Makes &amp; models</span></div>
+      </div>
+    </div>
+
+    <div class="hero-side ani-in" style="--d:300ms" aria-hidden="true">
+      <div class="gauge-card">
+        <svg viewBox="0 0 300 300" class="gauge">
+          <circle cx="150" cy="150" r="140" fill="none" stroke="#2a333c" stroke-width="2"/>
+          <circle cx="150" cy="150" r="120" fill="none" stroke="#1d242b" stroke-width="22"/>
+          <path d="M 55 230 A 120 120 0 1 1 245 230" fill="none" stroke="#3a444e" stroke-width="3" stroke-linecap="round"/>
+          <path d="M 205 250 A 120 120 0 0 1 245 230" fill="none" stroke="#d63b2f" stroke-width="6" stroke-linecap="round"/>
+          <g class="needle">
+            <line x1="150" y1="150" x2="150" y2="55" stroke="#1e9bff" stroke-width="5" stroke-linecap="round"/>
+            <circle cx="150" cy="150" r="14" fill="#1e9bff"/>
+            <circle cx="150" cy="150" r="6" fill="#14181d"/>
+          </g>
+          <text x="150" y="205" text-anchor="middle" fill="#c3ccd4" font-family="Oswald, sans-serif" font-size="15" letter-spacing="2">RPM × 1000</text>
+        </svg>
+        <div class="gauge-badge"><span>EST.</span><strong>2021</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <a href="#what" class="scroll-cue" aria-label="Scroll down">
+    <span></span>
+  </a>
+</section>
+
+<!-- ═══ MAKES MARQUEE ══════════════════════════════════════════════════ -->
+<section class="makes" aria-label="Makes we service">
+  <div class="marquee">
+    <div class="marquee-track">
+      @for (m of makes.concat(makes); track $index) {
+        <span class="make">{{ m }}</span>
+        <span class="make-dot">●</span>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STATS ══════════════════════════════════════════════════════════ -->
+<section class="stats">
+  <div class="wrap stats-grid">
+    <div class="stat" appReveal [revealDelay]="0">
+      <div class="num"><span [appCounter]="9500" [duration]="1600">9,500</span>+</div>
+      <div class="lbl">Facebook followers</div>
+    </div>
+    <div class="stat" appReveal [revealDelay]="80">
+      <div class="num"><span [appCounter]="2021" [duration]="1600">2021</span></div>
+      <div class="lbl">Serving since</div>
+    </div>
+    <div class="stat" appReveal [revealDelay]="160">
+      <div class="num">5<span class="star">★</span></div>
+      <div class="lbl">Repeat customers</div>
+    </div>
+    <div class="stat" appReveal [revealDelay]="240">
+      <div class="num">Same-day</div>
+      <div class="lbl">Diagnostics</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ HOW IT WORKS ════════════════════════════════════════════════════ -->
+<section class="block how" id="what">
+  <div class="wrap">
+    <div class="section-head center" appReveal>
+      <span class="eyebrow center">How it works</span>
+      <h2>Three steps, zero stress</h2>
+      <p>Booking your car in is quick. Here's exactly what happens from tap to keys-back.</p>
+    </div>
+    <div class="steps">
+      <div class="step" appReveal [revealDelay]="0">
+        <div class="step-num">01</div>
+        <div class="step-ico"><app-icon name="clipboard" /></div>
+        <h3>Tell us the problem</h3>
+        <p>Describe what's wrong in your own words and pick a date. Takes two minutes.</p>
+      </div>
+      <div class="step-arrow" aria-hidden="true">→</div>
+      <div class="step" appReveal [revealDelay]="120">
+        <div class="step-num">02</div>
+        <div class="step-ico"><app-icon name="search" /></div>
+        <h3>We diagnose it</h3>
+        <p>Glen confirms your slot. We scan and inspect first, then explain what we find.</p>
+      </div>
+      <div class="step-arrow" aria-hidden="true">→</div>
+      <div class="step" appReveal [revealDelay]="240">
+        <div class="step-num">03</div>
+        <div class="step-ico"><app-icon name="car" /></div>
+        <h3>Drive away sorted</h3>
+        <p>We do only the work that's needed, at a fair price. Track it all online.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ THE WORK STRIP ══════════════════════════════════════════════════ -->
+<section class="work-strip">
+  <div class="work-photo">
+    <img src="/man-fixing-a-car.jpg" alt="GT Garage technician working on a vehicle" loading="lazy">
+    <div class="work-tag" appReveal="scale">Real hands. Real work.</div>
+  </div>
+  <div class="work-copy" appReveal="right">
+    <span class="eyebrow">The standard</span>
+    <h2>Work we'd be<br>proud to sign</h2>
+    <p>Every job starts with a proper scan and a straight explanation. No inflated parts list, no repairs that can wait passed off as urgent. Just honest work from people who care about getting it right the first time.</p>
+    <ul class="work-points">
+      <li>Computer diagnostics before any repair</li>
+      <li>Clear pricing explained up front</li>
+      <li>Genuine and quality parts</li>
+    </ul>
+    <a routerLink="/about" class="btn btn-ghost dark">Meet the team</a>
+  </div>
+</section>
+
+<!-- ═══ SERVICES PREVIEW ════════════════════════════════════════════════ -->
+<section class="block svc-preview">
+  <div class="wrap">
+    <div class="section-head" appReveal>
+      <span class="eyebrow">What we do</span>
+      <h2>Service, done right</h2>
+      <p>Proper diagnostics before every repair — so you only pay for work your car actually needs.</p>
+    </div>
+
+    @if (loading()) {
+      <div class="cards">
+        <div class="skel"></div><div class="skel"></div><div class="skel"></div>
+      </div>
+    } @else {
+      <div class="cards">
+        @for (s of services().slice(0, 3); track s.name; let i = $index) {
+          <article class="card" appReveal [revealDelay]="i * 120">
+            @if (s.image_url || s.img) {
+              <div class="card-photo">
+                <img [src]="s.image_url || s.img" [alt]="s.name" loading="lazy">
+              </div>
+            }
+            <div class="card-body">
+              <h3>{{ s.name }}</h3>
+              <div class="rich-desc" [innerHTML]="safe(s.description)"></div>
+              <span class="card-link">Learn more →</span>
+            </div>
+          </article>
+        }
+      </div>
+    }
+
+    <div class="svc-more" appReveal>
+      <a routerLink="/services" class="btn btn-ghost dark">See all services →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WHY US ══════════════════════════════════════════════════════════ -->
+<section class="block why">
+  <div class="wrap">
+    <div class="section-head center" appReveal>
+      <span class="eyebrow center">Why GT Garage</span>
+      <h2>Trusted by the neighborhood</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-card" appReveal [revealDelay]="0">
+        <span class="why-n">01</span>
+        <h3>Honest every time</h3>
+        <p>We diagnose first and only recommend what's truly needed. If it can wait, we'll tell you.</p>
+      </div>
+      <div class="why-card" appReveal [revealDelay]="80">
+        <span class="why-n">02</span>
+        <h3>Real equipment</h3>
+        <p>Transmission flush machines, brake-fluid exchangers, pressure testers — the proper tools, not shortcuts.</p>
+      </div>
+      <div class="why-card" appReveal [revealDelay]="160">
+        <span class="why-n">03</span>
+        <h3>Pay with Maya</h3>
+        <p>Cashless and convenient. Settle your bill the easy way, no need to bring cash.</p>
+      </div>
+      <div class="why-card" appReveal [revealDelay]="240">
+        <span class="why-n">04</span>
+        <h3>Right in Mabalacat</h3>
+        <p>Easy to find on Orange Street, San Francisco — your neighborhood garage since 2021.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIALS ════════════════════════════════════════════════════ -->
+<section class="block testi">
+  <div class="wrap">
+    <div class="section-head center" appReveal>
+      <span class="eyebrow center">Word of mouth</span>
+      <h2>What customers say</h2>
+    </div>
+    <div class="testi-grid">
+      <blockquote class="quote" appReveal [revealDelay]="0">
+        <div class="stars">★★★★★</div>
+        <p>"Sobrang bait at honest mag-explain. Hindi ka nila niloloko sa presyo. Solid talaga ang trabaho."</p>
+        <cite>— Loyal customer</cite>
+      </blockquote>
+      <blockquote class="quote" appReveal [revealDelay]="100">
+        <div class="stars">★★★★★</div>
+        <p>"Same-day diagnostics and they explained everything clearly. My car's been running great since."</p>
+        <cite>— Repeat client</cite>
+      </blockquote>
+      <blockquote class="quote" appReveal [revealDelay]="200">
+        <div class="stars">★★★★★</div>
+        <p>"Been bringing my car here since 2021. Trusted, reliable, and fair. Highly recommended."</p>
+        <cite>— Long-time customer</cite>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA BAND ════════════════════════════════════════════════════════ -->
+<section class="cta-band">
+  <div class="cta-bg" aria-hidden="true"></div>
+  <div class="wrap cta-inner" appReveal>
+    <h2>Ready to <span class="accent">get rolling?</span></h2>
+    <p>Tell us what's going on with your car. We'll look at it, give it to you straight, and only fix what needs fixing.</p>
+    <div class="cta-actions">
+      <a routerLink="/book" class="btn btn-primary">Book a service</a>
+      <a routerLink="/track" class="btn btn-ghost">Track a booking</a>
+    </div>
+    <p class="cta-pay">Cash or <strong>Maya</strong> accepted</p>
+  </div>
+</section>

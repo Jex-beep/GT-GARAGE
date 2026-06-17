@@ -1,0 +1,120 @@
+<!-- ═══ HERO ═══════════════════════════════════════════════════════════ -->
+<section class="page-hero">
+  <div class="wrap">
+    <span class="eyebrow">Services</span>
+    <h1>What we handle</h1>
+    <p>All makes and models. Every job starts with a proper diagnosis, so you only pay for work your car actually needs.</p>
+  </div>
+</section>
+
+<!-- ═══ SERVICE GRID ════════════════════════════════════════════════════ -->
+<section class="block">
+  <div class="wrap">
+    <div class="section-head" appReveal>
+      <span class="eyebrow">Full service list</span>
+      <h2>Everything under one roof</h2>
+    </div>
+
+    @if (loading()) {
+      <div class="svc-grid">
+        @for (i of [1,2,3,4,5,6]; track i) { <div class="svc-skel"></div> }
+      </div>
+    } @else {
+      <div class="svc-grid">
+        @for (s of services(); track s.name; let i = $index) {
+          <article class="svc-card" appReveal [revealDelay]="(i % 3) * 100">
+            <div class="svc-top">
+              <span class="svc-ico" [class.has-img]="s.image_url">
+                @if (s.image_url) { <img [src]="s.image_url" [alt]="s.name" loading="lazy"> }
+                @else { <app-icon [name]="s.icon || 'wrench'" /> }
+              </span>
+              <span class="svc-rn">{{ pad(i + 1) }}</span>
+            </div>
+            <h3>{{ s.name }}</h3>
+            <div class="rich-desc" [innerHTML]="safe(s.description)"></div>
+            <div class="svc-foot">
+              @if (s.price_from && s.price_from !== 'Ask us') {
+                <span class="from">{{ s.price_from }}<small>Starting</small></span>
+              } @else {
+                <span class="from ask">Call for quote</span>
+              }
+              <a routerLink="/book" class="svc-book" aria-label="Book {{ s.name }}">Book →</a>
+            </div>
+          </article>
+        }
+      </div>
+    }
+  </div>
+</section>
+
+<!-- ═══ EQUIPMENT — CREDIBILITY ════════════════════════════════════════ -->
+<section class="equipment-section">
+  <div class="wrap">
+    <div class="section-head center" appReveal>
+      <span class="eyebrow center">The tools</span>
+      <h2>Real equipment for real repairs</h2>
+      <p>We invest in the proper tools for the job — not shortcuts. Here's what keeps your car in top shape.</p>
+    </div>
+
+    <div class="equip-grid">
+      <article class="equip-card" appReveal [revealDelay]="0">
+        <div class="equip-photo"><img src="/automatic-transmition-flush-macchine.jpg" alt="Automatic transmission flush machine" loading="lazy"></div>
+        <div class="equip-body"><h4>Transmission Flush Machine</h4><p>A complete fluid exchange that protects the whole system — not just a drain-and-fill.</p></div>
+      </article>
+      <article class="equip-card" appReveal [revealDelay]="100">
+        <div class="equip-photo"><img src="/break-fluid-exchanger.jpg" alt="Brake fluid exchanger" loading="lazy"></div>
+        <div class="equip-body"><h4>Brake Fluid Exchanger</h4><p>Purges moisture from the system for reliable, fade-free braking every time.</p></div>
+      </article>
+      <article class="equip-card" appReveal [revealDelay]="200">
+        <div class="equip-photo"><img src="/output-pressure.jpg" alt="Diagnostic pressure testing" loading="lazy"></div>
+        <div class="equip-body"><h4>Pressure Diagnostics</h4><p>Pinpoints fuel, cooling or hydraulic faults accurately — repairs target the real cause.</p></div>
+      </article>
+      <article class="equip-card" appReveal [revealDelay]="300">
+        <div class="equip-photo"><img src="/spark-plugs.jpg" alt="Spark plug and electrical service" loading="lazy"></div>
+        <div class="equip-body"><h4>Electrical & Tune-Up</h4><p>Plugs, sensors and wiring checked and verified — no guessing on your engine.</p></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FAQ ═════════════════════════════════════════════════════════════ -->
+<section class="block faq-section">
+  <div class="wrap faq-wrap">
+    <div class="faq-intro" appReveal="left">
+      <span class="eyebrow">Good to know</span>
+      <h2>Common questions</h2>
+      <p>Still unsure? Just describe the problem when you book and we'll guide you.</p>
+      <a routerLink="/book" class="btn btn-primary">Book a service</a>
+    </div>
+    <div class="faq-list" appReveal="right">
+      <div class="faq-item" [class.open]="faqOpen() === 0">
+        <button class="faq-q" (click)="toggleFaq(0)"><span>Do I need an appointment?</span><i>+</i></button>
+        <div class="faq-a"><p>Booking ahead means we can confirm a slot and have time set aside for your car. Walk-ins are welcome too, but booking online is faster.</p></div>
+      </div>
+      <div class="faq-item" [class.open]="faqOpen() === 1">
+        <button class="faq-q" (click)="toggleFaq(1)"><span>How much will it cost?</span><i>+</i></button>
+        <div class="faq-a"><p>Every job starts with a diagnosis. Once we know exactly what's needed, we explain the cost up front — before any work begins. No surprises.</p></div>
+      </div>
+      <div class="faq-item" [class.open]="faqOpen() === 2">
+        <button class="faq-q" (click)="toggleFaq(2)"><span>What cars do you work on?</span><i>+</i></button>
+        <div class="faq-a"><p>All makes and models — sedans, SUVs, AUVs and pick-ups. From Toyota to Ford, we've got you covered.</p></div>
+      </div>
+      <div class="faq-item" [class.open]="faqOpen() === 3">
+        <button class="faq-q" (click)="toggleFaq(3)"><span>How do I pay?</span><i>+</i></button>
+        <div class="faq-a"><p>Cash or <strong>Maya</strong> — cashless and convenient. Settle your bill whichever way suits you.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═════════════════════════════════════════════════════════════ -->
+<section class="cta-band">
+  <div class="wrap" appReveal>
+    <h2>Bring it in — we'll <span class="accent">tell you straight</span></h2>
+    <p>Tell us what's happening, pick a date, and we'll take a proper look. No surprises on the bill.</p>
+    <div class="cta-actions">
+      <a routerLink="/book" class="btn btn-primary">Book a service</a>
+      <span class="cta-pay">Cash or <strong>Maya</strong> accepted</span>
+    </div>
+  </div>
+</section>

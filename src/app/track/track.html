@@ -1,0 +1,105 @@
+<section class="page-hero">
+  <div class="wrap">
+    <span class="eyebrow">Track your booking</span>
+    <h1>Where's my booking?</h1>
+    <p>Enter the email and phone number you used to book, and we'll show you the latest status.</p>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap track-shell" appReveal>
+
+    @if (loading()) {
+      <p class="muted">Looking up your booking…</p>
+    }
+
+    <!-- ── RESULT ──────────────────────────────────────────────────────── -->
+    @else if (result(); as r) {
+      <div class="result">
+        <div class="result-head">
+          <div>
+            <span class="eyebrow">Booking for</span>
+            <h2>{{ r.customer_name }}</h2>
+          </div>
+          <span class="ref">Ref #{{ r.id.slice(0, 8).toUpperCase() }}</span>
+        </div>
+
+        <!-- Progress tracker -->
+        <div class="tracker" [attr.data-step]="stepIndex(r.status)">
+          <div class="step" [class.active]="stepIndex(r.status) >= 0">
+            <span class="dot">1</span>
+            <span class="step-lbl">Received</span>
+          </div>
+          <div class="line" [class.fill]="stepIndex(r.status) >= 1"></div>
+          <div class="step" [class.active]="stepIndex(r.status) >= 1">
+            <span class="dot">2</span>
+            <span class="step-lbl">Confirmed</span>
+          </div>
+          <div class="line" [class.fill]="stepIndex(r.status) >= 2"></div>
+          <div class="step" [class.active]="stepIndex(r.status) >= 2">
+            <span class="dot">3</span>
+            <span class="step-lbl">Done</span>
+          </div>
+        </div>
+
+        <!-- Status message -->
+        @if (r.status === 'new') {
+          <div class="status-msg pending">
+            <h3>We've received your booking</h3>
+            <p>Glen is reviewing it and will confirm your slot soon. Check back here, or watch for our call.</p>
+          </div>
+        } @else if (r.status === 'confirmed') {
+          <div class="status-msg confirmed">
+            <h3>✓ Your booking is confirmed!</h3>
+            <p>See you on <strong>{{ longDate(r.preferred_date) }}</strong> during the <strong>{{ slotLabel(r.time_slot) }}</strong> slot.</p>
+          </div>
+        } @else {
+          <div class="status-msg done">
+            <h3>This job is complete</h3>
+            <p>Thanks for trusting GT Garage. We hope your car's running great — see you next time!</p>
+          </div>
+        }
+
+        <!-- Admin note -->
+        @if (r.admin_note) {
+          <div class="note">
+            <span class="note-label">A note from GT Garage</span>
+            <p>{{ r.admin_note }}</p>
+          </div>
+        }
+
+        <!-- Details -->
+        <div class="details">
+          <div><span>Preferred date</span>{{ longDate(r.preferred_date) }}</div>
+          <div><span>Time slot</span>{{ slotLabel(r.time_slot) }}</div>
+        </div>
+
+        <div class="result-actions">
+          <button class="btn btn-ghost dark" (click)="reset()">Check another booking</button>
+          <a routerLink="/book" class="btn btn-primary">Book again</a>
+        </div>
+      </div>
+    }
+
+    <!-- ── LOOKUP FORM ─────────────────────────────────────────────────── -->
+    @else {
+      <form class="lookup" (ngSubmit)="lookup()" novalidate>
+        <div class="field">
+          <label for="email">Email address</label>
+          <input id="email" name="email" type="email" [(ngModel)]="email"
+            autocomplete="email" placeholder="you@example.com">
+        </div>
+        <div class="field">
+          <label for="phone">Mobile number</label>
+          <input id="phone" name="phone" [(ngModel)]="phone"
+            inputmode="tel" autocomplete="tel" placeholder="09XXXXXXXXX">
+        </div>
+        @if (error()) { <p class="err">{{ error() }}</p> }
+        <button type="submit" class="btn btn-primary" [disabled]="loading()">
+          {{ loading() ? 'Searching…' : 'Find my booking' }}
+        </button>
+        <p class="hint">Haven't booked yet? <a routerLink="/book">Book a service →</a></p>
+      </form>
+    }
+  </div>
+</section>

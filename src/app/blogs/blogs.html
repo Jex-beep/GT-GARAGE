@@ -1,0 +1,41 @@
+<section class="page-hero">
+  <div class="wrap">
+    <span class="eyebrow">Blog</span>
+    <h1>From the bay</h1>
+    <p>Maintenance tips, common fixes, and straight talk about keeping your car healthy — written by the people who work on them.</p>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    @if (loading()) {
+      <p class="muted">Loading posts…</p>
+    } @else if (selected()) {
+      <article class="post" appReveal>
+        <a class="back" routerLink="/blogs">← All posts</a>
+        <span class="date">{{ formatDate(selected()!.published_at) }}</span>
+        <h2>{{ selected()!.title }}</h2>
+        <div class="body" [innerHTML]="safe(selected()!.body)"></div>
+      </article>
+    } @else if (posts().length) {
+      <div class="post-grid">
+        @for (p of posts(); track p.id) {
+          <a class="post-card" appReveal [routerLink]="['/blogs', p.slug]">
+            <div class="thumb" [class.has-img]="p.cover_url">
+              @if (p.cover_url) { <img [src]="p.cover_url" [alt]="p.title"> }
+              @else { <span class="ph">GT</span> }
+            </div>
+            <div class="meta">
+              <span class="date">{{ formatDate(p.published_at) }}</span>
+              <h3>{{ p.title }}</h3>
+              <p>{{ p.excerpt }}</p>
+              <span class="read">Read more →</span>
+            </div>
+          </a>
+        }
+      </div>
+    } @else {
+      <p class="muted">No posts yet — check back soon. We're getting the first ones ready.</p>
+    }
+  </div>
+</section>

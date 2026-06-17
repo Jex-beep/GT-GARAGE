@@ -57,11 +57,19 @@ export class Book implements OnInit {
 
   private async getToken(): Promise<string> {
     if (!environment.recaptchaSiteKey || typeof grecaptcha === 'undefined') return 'dev';
-    return new Promise((resolve) => {
-      grecaptcha.ready(() => {
-        grecaptcha.execute(environment.recaptchaSiteKey, { action: 'booking' }).then(resolve);
+    try {
+      return await new Promise<string>((resolve, reject) => {
+        // Never let a reCAPTCHA problem block a booking — give up after 4s
+        const timer = setTimeout(() => reject(new Error('recaptcha timeout')), 4000);
+        grecaptcha.ready(() => {
+          grecaptcha.execute(environment.recaptchaSiteKey, { action: 'booking' })
+            .then((t: string) => { clearTimeout(timer); resolve(t); })
+            .catch((e: unknown) => { clearTimeout(timer); reject(e); });
+        });
       });
-    });
+    } catch {
+      return 'dev';
+    }
   }
 
   async submit() {

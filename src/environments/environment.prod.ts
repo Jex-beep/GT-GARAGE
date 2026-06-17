@@ -3,7 +3,7 @@ export const environment = {
   apiUrl: 'https://gt-garage-api.onrender.com',
   supabaseUrl: 'https://osemfrjaywyrwcojimuf.supabase.co',
   supabaseAnonKey: 'sb_publishable_-RptPUsxvSZHR4HvMAb0oA_JpVryryK',
-  recaptchaSiteKey: 'your-recaptcha-site-key',
+  recaptchaSiteKey: '',
   // Live Vercel site (swap to a custom domain later if you add one).
   siteUrl: 'https://gt-garage.vercel.app',
 };

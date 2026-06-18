@@ -144,7 +144,9 @@ header.scrolled .brand-logo { height: 40px; width: 40px; }
   .menu-btn { display: block; }
   .nav-backdrop.show { opacity: 1; visibility: visible; }
 
+  /* Closed: fully removed from layout so it can never widen the page */
   .nav-links {
+    display: none;
     position: fixed;
     top: 0; right: 0;
     height: 100dvh;
@@ -155,32 +157,20 @@ header.scrolled .brand-logo { height: 40px; width: 40px; }
     gap: 28px;
     background: var(--grad-steel);
     padding: 80px 40px;
-    transform: translateX(100%);
-    visibility: hidden;
-    box-shadow: none;
-    /* slide in instantly-visible on open; hide only after the close animation finishes */
-    transition: transform .35s var(--ease-out), visibility 0s linear .35s, box-shadow .35s;
-  }
-  .nav-links.open {
-    transform: translateX(0);
-    visibility: visible;
     box-shadow: -20px 0 60px rgba(0, 0, 0, .5);
-    transition: transform .35s var(--ease-out), visibility 0s, box-shadow .35s;
   }
-  .nav-links a { font-size: 1.3rem; opacity: 0; transform: translateX(20px); }
-  .nav-links.open a {
-    opacity: 1; transform: none;
-    transition: opacity .4s var(--ease-out), transform .4s var(--ease-out);
+  /* Open: shown + slides in from the right */
+  .nav-links.open {
+    display: flex;
+    animation: drawerIn .32s var(--ease-out);
   }
-  .nav-links.open a:nth-child(1) { transition-delay: .08s; }
-  .nav-links.open a:nth-child(2) { transition-delay: .14s; }
-  .nav-links.open a:nth-child(3) { transition-delay: .20s; }
-  .nav-links.open a:nth-child(4) { transition-delay: .26s; }
-  .nav-links.open a:nth-child(5) { transition-delay: .32s; }
-  .nav-links.open a:nth-child(6) { transition-delay: .38s; }
+  @keyframes drawerIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+
+  .nav-links a { font-size: 1.3rem; }
   .nav-cta { margin-top: 8px; padding: 14px 28px !important; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .nav-links, .nav-links a, .brand-logo { transition: none !important; }
+  .nav-links.open { animation: none; }
+  .brand-logo { transition: none !important; }
 }

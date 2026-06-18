@@ -40,6 +40,10 @@ body {
   color: var(--steel-900);
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  /* Belt-and-suspenders: clip any stray horizontal overflow on every device.
+     `clip` (not `hidden`) so it never becomes a scroll container — keeps
+     vertical scrolling + Angular scroll-to-top working. */
+  overflow-x: clip;
 }
 h1, h2, h3, h4, .display {
   font-family: var(--font-display);

@@ -145,9 +145,10 @@ section.block { padding: clamp(60px, 9vw, 100px) 0; }
 .reveal.in { opacity: 1; transform: none; }
 
 /* ── MARQUEE ──────────────────────────────────────────────────────────── */
-.marquee { overflow: hidden; }
-.marquee-track { display: flex; width: max-content; animation: marquee 28s linear infinite; }
-@keyframes marquee { to { transform: translateX(-50%); } }
+.marquee { display: flex; overflow: hidden; }
+/* Two identical groups, each scrolling a full -100% → seamless loop at any width */
+.marquee-group { display: flex; flex-shrink: 0; align-items: center; animation: marquee 38s linear infinite; }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-100%); } }
 
 /* ── FLOAT / PULSE HELPERS ────────────────────────────────────────────── */
 @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
@@ -158,7 +159,7 @@ section.block { padding: clamp(60px, 9vw, 100px) 0; }
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
   html { scroll-behavior: auto; }
-  .marquee-track { animation: none; }
+  .marquee-group { animation: none; }
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
 }
 

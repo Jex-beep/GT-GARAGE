@@ -59,8 +59,14 @@
 <!-- ═══ MAKES MARQUEE ══════════════════════════════════════════════════ -->
 <section class="makes" aria-label="Makes we service">
   <div class="marquee">
-    <div class="marquee-track">
-      @for (m of makes.concat(makes); track $index) {
+    <div class="marquee-group">
+      @for (m of marqueeRow; track $index) {
+        <span class="make">{{ m }}</span>
+        <span class="make-dot">●</span>
+      }
+    </div>
+    <div class="marquee-group" aria-hidden="true">
+      @for (m of marqueeRow; track $index) {
         <span class="make">{{ m }}</span>
         <span class="make-dot">●</span>
       }

@@ -43,8 +43,10 @@ export class Home implements OnInit {
   services = signal<HomeService[]>([]);
   loading = signal(true);
 
-  // Makes we service — scrolls as a marquee
-  makes = ['TOYOTA', 'MITSUBISHI', 'HONDA', 'NISSAN', 'FORD', 'HYUNDAI', 'ISUZU', 'SUZUKI', 'KIA', 'MAZDA'];
+  // Makes we service — scrolls as a marquee. Repeated so each group is wide
+  // enough to fill any screen (prevents a visible gap at the loop point).
+  private makes = ['TOYOTA', 'MITSUBISHI', 'HONDA', 'NISSAN', 'FORD', 'HYUNDAI', 'ISUZU', 'SUZUKI', 'KIA', 'MAZDA'];
+  marqueeRow = [...this.makes, ...this.makes, ...this.makes];
 
   private sanitizer = inject(DomSanitizer);
   private seo = inject(SeoService);

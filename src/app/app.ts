@@ -2,11 +2,12 @@ import { Component, OnInit, signal, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Navigations } from './navigations/navigations';
 import { Footer } from './footer/footer';
+import { StickyCta } from './sticky-cta/sticky-cta';
 import { ApiService } from './core/api';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Navigations, Footer],
+  imports: [RouterOutlet, Navigations, Footer, StickyCta],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

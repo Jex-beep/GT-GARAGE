@@ -13,10 +13,14 @@
         Your car,<br><span class="accent">dialed in.</span>
       </h1>
       <p class="ani-in" style="--d:240ms">
-        Honest diagnostics, clean work, fair pricing. We fix what needs fixing — and tell you straight about the rest.
+        Honest diagnostics, clean work, fair pricing. Book online and we'll confirm your slot — usually the same day.
       </p>
-      <div class="hero-actions ani-in" style="--d:360ms">
-        <a routerLink="/book" class="btn btn-primary">Book a service</a>
+      <div class="hero-rating ani-in" style="--d:320ms">
+        <span class="stars" aria-hidden="true">★★★★★</span>
+        <span class="rating-text"><strong>5.0</strong> · Trusted by Mabalacat drivers since 2021</span>
+      </div>
+      <div class="hero-actions ani-in" style="--d:400ms">
+        <a routerLink="/book" class="btn btn-primary btn-lg">Book a service →</a>
         <a routerLink="/services" class="btn btn-ghost">See what we do</a>
       </div>
       <div class="hero-trust ani-in" style="--d:480ms">
@@ -213,24 +217,37 @@
   <div class="wrap">
     <div class="section-head center" appReveal>
       <span class="eyebrow center">Word of mouth</span>
-      <h2>What customers say</h2>
+      <h2>Rated 5.0 by local drivers</h2>
+      <p>9,500+ followers and years of repeat customers. Here's what a few of them say —</p>
     </div>
     <div class="testi-grid">
       <blockquote class="quote" appReveal [revealDelay]="0">
         <div class="stars">★★★★★</div>
         <p>"Sobrang bait at honest mag-explain. Hindi ka nila niloloko sa presyo. Solid talaga ang trabaho."</p>
-        <cite>— Loyal customer</cite>
+        <footer class="quote-by">
+          <span class="avatar">LC</span>
+          <cite>Loyal customer · Mabalacat</cite>
+        </footer>
       </blockquote>
       <blockquote class="quote" appReveal [revealDelay]="100">
         <div class="stars">★★★★★</div>
         <p>"Same-day diagnostics and they explained everything clearly. My car's been running great since."</p>
-        <cite>— Repeat client</cite>
+        <footer class="quote-by">
+          <span class="avatar">RC</span>
+          <cite>Repeat client · Pampanga</cite>
+        </footer>
       </blockquote>
       <blockquote class="quote" appReveal [revealDelay]="200">
         <div class="stars">★★★★★</div>
         <p>"Been bringing my car here since 2021. Trusted, reliable, and fair. Highly recommended."</p>
-        <cite>— Long-time customer</cite>
+        <footer class="quote-by">
+          <span class="avatar">GT</span>
+          <cite>Long-time customer</cite>
+        </footer>
       </blockquote>
+    </div>
+    <div class="testi-more" appReveal>
+      <a href="https://www.facebook.com/teamgtgarage" target="_blank" rel="noopener">Read more reviews on Facebook ↗</a>
     </div>
   </div>
 </section>

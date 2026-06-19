@@ -86,6 +86,8 @@ img { max-width: 100%; display: block; }
 .btn-primary:disabled { opacity: .6; cursor: not-allowed; transform: none; box-shadow: none; }
 .btn-ghost { border-color: var(--steel-600); color: var(--steel-100); }
 .btn-ghost:hover { border-color: var(--blue); color: var(--blue); transform: translateY(-2px); }
+/* Larger, attention-grabbing primary CTA for hero/conversion points */
+.btn-lg { padding: 18px 38px; font-size: 1.1rem; }
 /* shine sweep on primary */
 .btn-primary::after {
   content: '';
@@ -169,6 +171,10 @@ section.block { padding: clamp(60px, 9vw, 100px) 0; }
 /* a little more breathing room on very small phones */
 @media (max-width: 380px) {
   .wrap { padding: 0 18px; }
+}
+/* clearance so the sticky mobile Book CTA never covers the footer */
+@media (max-width: 900px) {
+  footer { padding-bottom: 96px; }
 }
 /* never let a long word (email, URL) push the layout wide */
 p, h1, h2, h3, h4, a, span, strong, cite, label, li { overflow-wrap: break-word; }

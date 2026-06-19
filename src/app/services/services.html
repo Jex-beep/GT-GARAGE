@@ -23,22 +23,26 @@
       <div class="svc-grid">
         @for (s of services(); track s.name; let i = $index) {
           <article class="svc-card" appReveal [revealDelay]="(i % 3) * 100">
-            <div class="svc-top">
-              <span class="svc-ico" [class.has-img]="s.image_url">
-                @if (s.image_url) { <img [src]="s.image_url" [alt]="s.name" loading="lazy"> }
-                @else { <app-icon [name]="s.icon || 'wrench'" /> }
-              </span>
+            <!-- Media header: big photo when available, else an icon banner -->
+            <div class="svc-media" [class.is-photo]="s.image_url">
+              @if (s.image_url) {
+                <img [src]="s.image_url" [alt]="s.name" loading="lazy">
+              } @else {
+                <span class="svc-media-ico"><app-icon [name]="s.icon || 'wrench'" /></span>
+              }
               <span class="svc-rn">{{ pad(i + 1) }}</span>
             </div>
-            <h3>{{ s.name }}</h3>
-            <div class="rich-desc" [innerHTML]="safe(s.description)"></div>
-            <div class="svc-foot">
-              @if (s.price_from && s.price_from !== 'Ask us') {
-                <span class="from">{{ s.price_from }}<small>Starting</small></span>
-              } @else {
-                <span class="from ask">Call for quote</span>
-              }
-              <a routerLink="/book" class="svc-book" aria-label="Book {{ s.name }}">Book →</a>
+            <div class="svc-body">
+              <h3>{{ s.name }}</h3>
+              <div class="rich-desc" [innerHTML]="safe(s.description)"></div>
+              <div class="svc-foot">
+                @if (s.price_from && s.price_from !== 'Ask us') {
+                  <span class="from">{{ s.price_from }}<small>Starting</small></span>
+                } @else {
+                  <span class="from ask">Call for quote</span>
+                }
+                <a routerLink="/book" class="svc-book" aria-label="Book {{ s.name }}">Book now →</a>
+              </div>
             </div>
           </article>
         }

@@ -1,41 +1,67 @@
 /* ── SERVICE GRID ─────────────────────────────────────────────────────── */
-.svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 .svc-card {
   background: var(--white); border: 1px solid var(--steel-100); border-radius: var(--r);
-  padding: 28px 26px; display: flex; flex-direction: column;
+  display: flex; flex-direction: column;
   position: relative; overflow: hidden;
   transition: transform .25s var(--ease-out), box-shadow .25s, border-color .25s;
 }
-.svc-card::before {
-  content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
-  background: var(--grad-blue); transform: scaleX(0); transform-origin: left; transition: transform .3s var(--ease-out);
-}
-.svc-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); border-color: var(--blue-glow); }
-.svc-card:hover::before { transform: scaleX(1); }
+.svc-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); border-color: var(--blue-glow); }
 
-.svc-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
-.svc-ico { width: 56px; height: 56px; display: grid; place-items: center; background: var(--paper); border-radius: 14px; color: var(--blue); overflow: hidden; }
-.svc-ico app-icon { width: 30px; height: 30px; }
-.svc-ico.has-img { background: var(--steel-100); }
-.svc-ico img { width: 100%; height: 100%; object-fit: cover; }
-.svc-rn { font-family: var(--font-display); font-size: 2rem; color: var(--steel-100); }
-.svc-card h3 { font-size: 1.2rem; margin-bottom: 10px; }
-.svc-card p, .rich-desc { color: var(--steel-700); font-size: 0.93rem; line-height: 1.6; }
+/* Media header — big photo, or an icon banner as fallback */
+.svc-media {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+  background: var(--grad-steel);
+  display: grid;
+  place-items: center;
+}
+.svc-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s var(--ease-out); }
+.svc-card:hover .svc-media.is-photo img { transform: scale(1.07); }
+.svc-media-ico {
+  width: 72px; height: 72px; display: grid; place-items: center;
+  background: rgba(30,155,255,.14); border-radius: 18px; color: var(--blue-glow);
+}
+.svc-media-ico app-icon { width: 38px; height: 38px; }
+.svc-media.is-photo::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(12,14,17,.55), transparent 55%);
+}
+.svc-rn {
+  position: absolute; top: 12px; right: 16px; z-index: 1;
+  font-family: var(--font-display); font-size: 2.2rem; line-height: 1;
+  color: var(--white); opacity: .85; text-shadow: 0 2px 12px rgba(0,0,0,.5);
+}
+
+.svc-body { padding: 24px 26px 26px; display: flex; flex-direction: column; flex: 1; }
+.svc-card h3 { font-size: 1.3rem; margin-bottom: 10px; }
+.svc-card p, .rich-desc { color: var(--steel-700); font-size: 0.94rem; line-height: 1.65; }
 .rich-desc { flex: 1; }
 :host ::ng-deep .rich-desc p { margin: 0 0 .5em; }
 :host ::ng-deep .rich-desc p:last-child { margin-bottom: 0; }
 :host ::ng-deep .rich-desc strong { color: var(--steel-900); }
-:host ::ng-deep .rich-desc ul, :host ::ng-deep .rich-desc ol { margin: .3em 0 .5em 1.2em; }
+:host ::ng-deep .rich-desc ul, :host ::ng-deep .rich-desc ol { margin: .4em 0 .6em 1.1em; }
+:host ::ng-deep .rich-desc li { margin-bottom: .25em; }
 :host ::ng-deep .rich-desc a { color: var(--blue-deep); }
 
-.svc-foot { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--steel-100); }
-.from { font-family: var(--font-display); color: var(--steel-900); font-size: 1.05rem; }
+.svc-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--steel-100); gap: 12px; }
+.from { font-family: var(--font-display); color: var(--steel-900); font-size: 1.15rem; }
 .from small { display: block; font-size: 0.66rem; color: var(--steel-300); letter-spacing: .08em; text-transform: uppercase; }
 .from.ask { color: var(--blue-deep); font-size: 0.95rem; }
-.svc-book { font-family: var(--font-display); text-transform: uppercase; font-size: .82rem; letter-spacing: .05em; color: var(--blue); padding: 6px 0; transition: gap .2s; }
-.svc-book:hover { color: var(--blue-deep); }
+.svc-book {
+  font-family: var(--font-display); text-transform: uppercase; font-size: .82rem; letter-spacing: .05em;
+  color: var(--white); background: var(--grad-blue);
+  padding: 10px 18px; border-radius: var(--r); white-space: nowrap;
+  box-shadow: 0 6px 16px rgba(30,155,255,.3);
+  transition: transform .2s var(--ease-out), box-shadow .2s;
+}
+.svc-book:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(30,155,255,.45); }
 
-.svc-skel { height: 230px; border-radius: var(--r); background: linear-gradient(90deg, var(--steel-100) 25%, #e0e5ea 50%, var(--steel-100) 75%); background-size: 200%; animation: shimmer 1.4s infinite; }
+/* Loading skeleton — mirrors the card shape (media + body) */
+.svc-skel { border-radius: var(--r); border: 1px solid var(--steel-100); overflow: hidden; background: var(--white); }
+.svc-skel::before { content: ''; display: block; height: 200px; background: var(--shimmer); background-size: 200%; animation: shimmer 1.4s infinite; }
+.svc-skel::after { content: ''; display: block; height: 120px; margin: 22px 26px; border-radius: 4px; background: var(--shimmer); background-size: 200%; animation: shimmer 1.4s infinite; }
 @keyframes shimmer { 0% { background-position: 200%; } 100% { background-position: -200%; } }
 
 /* ── EQUIPMENT ────────────────────────────────────────────────────────── */

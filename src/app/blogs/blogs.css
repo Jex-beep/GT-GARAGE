@@ -1,5 +1,15 @@
 .muted { color: var(--steel-700); }
 
+/* Loading skeleton — mirrors the post-card shape */
+.post-skel { background: var(--white); border: 1px solid var(--steel-100); overflow: hidden; }
+.ps-thumb { aspect-ratio: 16/10; background: var(--shimmer); background-size: 200%; animation: psShimmer 1.4s infinite; }
+.ps-body { padding: 22px 24px 26px; display: flex; flex-direction: column; gap: 12px; }
+.ps-line { height: 12px; border-radius: 4px; background: var(--shimmer); background-size: 200%; animation: psShimmer 1.4s infinite; }
+.ps-line.sm { width: 35%; height: 9px; }
+.ps-line.lg { width: 80%; height: 18px; margin-bottom: 4px; }
+@keyframes psShimmer { 0% { background-position: 200%; } 100% { background-position: -200%; } }
+@media (prefers-reduced-motion: reduce) { .ps-thumb, .ps-line { animation: none; } }
+
 .post-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 .post-card {
   display: block;

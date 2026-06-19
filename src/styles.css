@@ -30,6 +30,9 @@
 
   --ease-out: cubic-bezier(.22, 1, .36, 1);
   --r: 4px;
+
+  /* shared loading-skeleton shimmer */
+  --shimmer: linear-gradient(90deg, var(--steel-100) 25%, #e0e5ea 50%, var(--steel-100) 75%);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }

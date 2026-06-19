@@ -9,7 +9,19 @@
 <section class="block">
   <div class="wrap">
     @if (loading()) {
-      <p class="muted">Loading posts…</p>
+      <div class="post-grid">
+        @for (i of [1,2,3]; track i) {
+          <div class="post-skel">
+            <div class="ps-thumb"></div>
+            <div class="ps-body">
+              <span class="ps-line sm"></span>
+              <span class="ps-line lg"></span>
+              <span class="ps-line"></span>
+              <span class="ps-line"></span>
+            </div>
+          </div>
+        }
+      </div>
     } @else if (selected()) {
       <article class="post" appReveal>
         <a class="back" routerLink="/blogs">← All posts</a>

@@ -1,11 +1,11 @@
 import { Component, OnInit, signal, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../core/auth';
-import { ApiService, ServiceFull } from '../core/api';
+import { ApiService, ServiceFull, ServiceCategory } from '../core/api';
 import { RichEditor } from '../core/rich-editor';
 import { ImageUpload } from '../core/image-upload';
 
-interface SvcForm { name: string; description: string; price_from: string; sort_order: number; image_url: string; }
+interface SvcForm { name: string; description: string; price_from: string; sort_order: number; image_url: string; category: ServiceCategory; }
 
 @Component({
   selector: 'app-services-editor',
@@ -28,7 +28,7 @@ export class ServicesEditor implements OnInit {
 
   async ngOnInit() { await this.load(); }
 
-  private blank(): SvcForm { return { name: '', description: '', price_from: 'Ask us', sort_order: 0, image_url: '' }; }
+  private blank(): SvcForm { return { name: '', description: '', price_from: 'Ask us', sort_order: 0, image_url: '', category: 'standard' }; }
 
   async load() {
     const t = this.auth.token; if (!t) return;
@@ -41,7 +41,7 @@ export class ServicesEditor implements OnInit {
   startAdd() { this.form = this.blank(); this.editingId.set(''); this.showForm.set(true); this.error.set(''); }
 
   startEdit(s: ServiceFull) {
-    this.form = { name: s.name, description: s.description, price_from: s.price_from, sort_order: s.sort_order ?? 0, image_url: s.image_url ?? '' };
+    this.form = { name: s.name, description: s.description, price_from: s.price_from, sort_order: s.sort_order ?? 0, image_url: s.image_url ?? '', category: s.category ?? 'standard' };
     this.editingId.set(s.id); this.showForm.set(true); this.error.set('');
   }
 
@@ -59,6 +59,7 @@ export class ServicesEditor implements OnInit {
       price_from: this.form.price_from.trim(),
       sort_order: Number(this.form.sort_order) || 0,
       image_url: this.form.image_url.trim() || null,
+      category: this.form.category,
     };
     try {
       const id = this.editingId();
@@ -82,5 +83,9 @@ export class ServicesEditor implements OnInit {
   // Plain-text preview for the list (description may contain HTML)
   plain(html: string): string {
     return (html || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+  }
+
+  categoryLabel(c: ServiceCategory | undefined): string {
+    return c === 'package' ? 'Package' : c === 'free' ? 'Free service' : 'Standard';
   }
 }

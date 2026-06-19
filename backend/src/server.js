@@ -63,7 +63,7 @@ async function fetchServices() {
   }
   const { data, error } = await supabase
     .from('services')
-    .select('name, description, price_from, image_url')
+    .select('name, description, price_from, image_url, category')
     .order('sort_order', { ascending: true });
   if (error) throw error;
   servicesCache  = data;
@@ -255,7 +255,7 @@ app.get('/api/services/all', asyncHandler(async (req, res) => {
   await verifyToken(req.headers.authorization);
   const { data, error } = await supabase
     .from('services')
-    .select('id, name, description, price_from, sort_order, image_url')
+    .select('id, name, description, price_from, sort_order, image_url, category')
     .order('sort_order', { ascending: true });
   if (error) throw error;
   res.json(data);

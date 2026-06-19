@@ -7,46 +7,89 @@
   </div>
 </section>
 
-<!-- ═══ SERVICE GRID ════════════════════════════════════════════════════ -->
+<!-- ═══ SERVICES — GROUPED BY TYPE ═════════════════════════════════════ -->
 <section class="block">
   <div class="wrap">
-    <div class="section-head" appReveal>
-      <span class="eyebrow">Full service list</span>
-      <h2>Everything under one roof</h2>
-    </div>
-
     @if (loading()) {
+      <div class="section-head" appReveal>
+        <span class="eyebrow">Full service list</span>
+        <h2>Everything under one roof</h2>
+      </div>
       <div class="svc-grid">
         @for (i of [1,2,3,4,5,6]; track i) { <div class="svc-skel"></div> }
       </div>
     } @else {
-      <div class="svc-grid">
-        @for (s of services(); track s.name; let i = $index) {
-          <article class="svc-card" appReveal [revealDelay]="(i % 3) * 100">
-            <!-- Media header: big photo when available, else an icon banner -->
-            <div class="svc-media" [class.is-photo]="s.image_url">
-              @if (s.image_url) {
-                <img [src]="s.image_url" [alt]="s.name" loading="lazy">
+
+      <!-- One card layout, reused across every section -->
+      <ng-template #card let-s let-i="i" let-section="section">
+        <article class="svc-card" appReveal [revealDelay]="(i % 3) * 100">
+          <div class="svc-media" [class.is-photo]="s.image_url">
+            @if (s.image_url) {
+              <img [src]="s.image_url" [alt]="s.name" loading="lazy">
+            } @else {
+              <span class="svc-media-ico"><app-icon [name]="s.icon || 'wrench'" /></span>
+            }
+            @if (section === 'free') { <span class="svc-flag">Free</span> }
+            <span class="svc-rn">{{ pad(i + 1) }}</span>
+          </div>
+          <div class="svc-body">
+            <h3>{{ s.name }}</h3>
+            <div class="rich-desc" [innerHTML]="safe(s.description)"></div>
+            <div class="svc-foot">
+              @if (section === 'free') {
+                <span class="from free-price">Included free</span>
+              } @else if (s.price_from && s.price_from !== 'Ask us') {
+                <span class="from">{{ s.price_from }}<small>Starting</small></span>
               } @else {
-                <span class="svc-media-ico"><app-icon [name]="s.icon || 'wrench'" /></span>
+                <span class="from ask">Call for quote</span>
               }
-              <span class="svc-rn">{{ pad(i + 1) }}</span>
+              <a routerLink="/book" class="svc-book" aria-label="Book {{ s.name }}">Book now →</a>
             </div>
-            <div class="svc-body">
-              <h3>{{ s.name }}</h3>
-              <div class="rich-desc" [innerHTML]="safe(s.description)"></div>
-              <div class="svc-foot">
-                @if (s.price_from && s.price_from !== 'Ask us') {
-                  <span class="from">{{ s.price_from }}<small>Starting</small></span>
-                } @else {
-                  <span class="from ask">Call for quote</span>
-                }
-                <a routerLink="/book" class="svc-book" aria-label="Book {{ s.name }}">Book now →</a>
-              </div>
-            </div>
-          </article>
-        }
-      </div>
+          </div>
+        </article>
+      </ng-template>
+
+      <!-- 1. Packages -->
+      @if (packages().length) {
+        <div class="section-head" appReveal>
+          <span class="eyebrow">Packages</span>
+          <h2>PMS Packages</h2>
+          <p>Complete preventive maintenance — everything done in one visit, one clear price.</p>
+        </div>
+        <div class="svc-grid">
+          @for (s of packages(); track s.name; let i = $index) {
+            <ng-container [ngTemplateOutlet]="card" [ngTemplateOutletContext]="{ $implicit: s, i: i, section: 'package' }" />
+          }
+        </div>
+      }
+
+      <!-- 2. Standard services -->
+      @if (standard().length) {
+        <div class="section-head" [class.section-gap]="packages().length" appReveal>
+          <span class="eyebrow">Standard services</span>
+          <h2>What we handle, à la carte</h2>
+          <p>Pick exactly what your car needs — every job starts with a proper diagnosis.</p>
+        </div>
+        <div class="svc-grid">
+          @for (s of standard(); track s.name; let i = $index) {
+            <ng-container [ngTemplateOutlet]="card" [ngTemplateOutletContext]="{ $implicit: s, i: i, section: 'standard' }" />
+          }
+        </div>
+      }
+
+      <!-- 3. Free services -->
+      @if (free().length) {
+        <div class="section-head section-gap" appReveal>
+          <span class="eyebrow">Free services</span>
+          <h2>Free with every package</h2>
+          <p>Bonus value, no extra charge.</p>
+        </div>
+        <div class="svc-grid">
+          @for (s of free(); track s.name; let i = $index) {
+            <ng-container [ngTemplateOutlet]="card" [ngTemplateOutletContext]="{ $implicit: s, i: i, section: 'free' }" />
+          }
+        </div>
+      }
     }
   </div>
 </section>

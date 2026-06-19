@@ -1,4 +1,5 @@
-import { Component, OnInit, signal, inject } from '@angular/core';
+import { Component, OnInit, signal, computed, inject } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { RevealDirective } from '../core/reveal';
@@ -21,13 +22,18 @@ const FALLBACK_SERVICES: SvcRow[] = [
 
 @Component({
   selector: 'app-services',
-  imports: [RouterLink, RevealDirective, Icon],
+  imports: [RouterLink, RevealDirective, Icon, NgTemplateOutlet],
   templateUrl: './services.html',
   styleUrl: './services.css',
 })
 export class Services implements OnInit {
   services = signal<SvcRow[]>([]);
   loading = signal(true);
+
+  // Grouped by category for the three page sections
+  packages = computed(() => this.services().filter((s) => s.category === 'package'));
+  standard = computed(() => this.services().filter((s) => !s.category || s.category === 'standard'));
+  free = computed(() => this.services().filter((s) => s.category === 'free'));
 
   faqOpen = signal<number | null>(0);
 

@@ -33,6 +33,16 @@
   font-family: var(--font-display); font-size: 2.2rem; line-height: 1;
   color: var(--white); opacity: .85; text-shadow: 0 2px 12px rgba(0,0,0,.5);
 }
+/* "Free" flag on free-service cards */
+.svc-flag {
+  position: absolute; top: 14px; left: 14px; z-index: 1;
+  font-family: var(--font-display); text-transform: uppercase; letter-spacing: .06em;
+  font-size: .72rem; color: var(--white); background: var(--green);
+  padding: 5px 12px; border-radius: 2px; box-shadow: 0 4px 12px rgba(0,0,0,.3);
+}
+
+/* spacing between category sections */
+.section-gap { margin-top: clamp(48px, 7vw, 72px); }
 
 .svc-body { padding: 24px 26px 26px; display: flex; flex-direction: column; flex: 1; }
 .svc-card h3 { font-size: 1.3rem; margin-bottom: 10px; }
@@ -49,6 +59,7 @@
 .from { font-family: var(--font-display); color: var(--steel-900); font-size: 1.15rem; }
 .from small { display: block; font-size: 0.66rem; color: var(--steel-300); letter-spacing: .08em; text-transform: uppercase; }
 .from.ask { color: var(--blue-deep); font-size: 0.95rem; }
+.from.free-price { color: var(--green); font-size: 0.95rem; }
 .svc-book {
   font-family: var(--font-display); text-transform: uppercase; font-size: .82rem; letter-spacing: .05em;
   color: var(--white); background: var(--grad-blue);

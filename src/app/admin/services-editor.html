@@ -14,9 +14,17 @@
   <div class="ed-form">
     <h3>{{ editingId() ? 'Edit service' : 'New service' }}</h3>
     <div class="ed-grid">
-      <div class="ed-field full">
+      <div class="ed-field">
         <label for="sname">Service name</label>
         <input id="sname" name="sname" [(ngModel)]="form.name" placeholder="e.g. Brake Service">
+      </div>
+      <div class="ed-field">
+        <label for="scat">Type <span class="hint">(which section it shows in)</span></label>
+        <select id="scat" name="scat" [(ngModel)]="form.category">
+          <option value="standard">Standard service</option>
+          <option value="free">Free service</option>
+          <option value="package">Package</option>
+        </select>
       </div>
       <div class="ed-field full">
         <label>Description</label>
@@ -24,7 +32,7 @@
           placeholder="What this service covers, in plain terms." />
       </div>
       <div class="ed-field">
-        <label for="sprice">Price from</label>
+        <label for="sprice">Price from <span class="hint">(use “Free” for free services)</span></label>
         <input id="sprice" name="sprice" [(ngModel)]="form.price_from" placeholder="Ask us / ₱1,500">
       </div>
       <div class="ed-field">
@@ -53,6 +61,7 @@
           <h3>{{ s.name }}</h3>
           <p>{{ plain(s.description) }}</p>
           <div class="ed-meta">
+            <span class="ed-tag" [class.pub]="s.category === 'package'" [class.draft]="s.category === 'free'" [class.price]="!s.category || s.category === 'standard'">{{ categoryLabel(s.category) }}</span>
             <span class="ed-tag price">{{ s.price_from }}</span>
             <span class="muted">Sort: {{ s.sort_order }}</span>
           </div>

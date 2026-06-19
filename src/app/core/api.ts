@@ -6,11 +6,12 @@ export interface BookingPayload {
   problem: string; preferred_date: string; time_slot: string;
   recaptcha_token: string;
 }
-export interface Service { name: string; description: string; price_from: string; image_url?: string | null; }
+export type ServiceCategory = 'standard' | 'free' | 'package';
+export interface Service { name: string; description: string; price_from: string; image_url?: string | null; category?: ServiceCategory; }
 // Full service row used by the admin editor
 export interface ServiceFull {
   id: string; name: string; description: string; price_from: string;
-  sort_order: number; image_url: string | null;
+  sort_order: number; image_url: string | null; category: ServiceCategory;
 }
 export interface BlogPost {
   id: string; title: string; slug: string; excerpt: string;

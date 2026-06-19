@@ -24,6 +24,7 @@ export const serviceSchema = z.object({
   price_from:  z.string().trim().min(1),
   sort_order:  z.number().int().optional().default(0),
   image_url:   z.string().trim().optional().nullable(),
+  category:    z.enum(['standard', 'free', 'package']).optional(),
 });
 
 export const postSchema = z.object({

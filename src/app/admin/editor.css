@@ -48,12 +48,18 @@
 .ed-field.full { grid-column: 1 / -1; }
 .ed-field label { font-family: var(--font-display); text-transform: uppercase; font-size: .8rem; letter-spacing: .05em; color: var(--steel-700); }
 .ed-field label .hint { text-transform: none; letter-spacing: 0; color: var(--steel-300); font-family: var(--font-body); font-size: .78rem; }
-.ed-field input, .ed-field textarea {
+.ed-field input, .ed-field textarea, .ed-field select {
   padding: 12px 14px; border: 1px solid var(--steel-200); border-radius: 2px;
   font-family: var(--font-body); font-size: 1rem; background: var(--white); width: 100%;
+  color: var(--steel-900);
 }
 .ed-field textarea { resize: vertical; min-height: 100px; }
-.ed-field input:focus, .ed-field textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(30,155,255,.18); }
+.ed-field select {
+  appearance: none; -webkit-appearance: none; cursor: pointer; padding-right: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%232a333c' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 14px center;
+}
+.ed-field input:focus, .ed-field textarea:focus, .ed-field select:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(30,155,255,.18); }
 
 .ed-toggle { display: flex; align-items: center; gap: 10px; cursor: pointer; }
 .ed-toggle input { width: auto; }

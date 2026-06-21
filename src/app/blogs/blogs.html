@@ -32,7 +32,7 @@
     } @else if (posts().length) {
       <div class="post-grid">
         @for (p of posts(); track p.id) {
-          <a class="post-card" appReveal [routerLink]="['/blogs', p.slug]">
+          <a class="post-card" appReveal [revealDelay]="$index * 70" [routerLink]="['/blogs', p.slug]">
             <div class="thumb" [class.has-img]="p.cover_url">
               @if (p.cover_url) { <img [src]="p.cover_url" [alt]="p.title"> }
               @else { <span class="ph">GT</span> }
@@ -47,7 +47,7 @@
         }
       </div>
     } @else {
-      <p class="muted">No posts yet — check back soon. We're getting the first ones ready.</p>
+      <p class="muted" appReveal>No posts yet — check back soon. We're getting the first ones ready.</p>
     }
   </div>
 </section>

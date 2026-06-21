@@ -16,7 +16,7 @@
     <!-- ── RESULT ──────────────────────────────────────────────────────── -->
     @else if (result(); as r) {
       <div class="result">
-        <div class="result-head">
+        <div class="result-head" appReveal>
           <div>
             <span class="eyebrow">Booking for</span>
             <h2>{{ r.customer_name }}</h2>
@@ -25,7 +25,7 @@
         </div>
 
         <!-- Progress tracker -->
-        <div class="tracker" [attr.data-step]="stepIndex(r.status)">
+        <div class="tracker" appReveal [revealDelay]="90" [attr.data-step]="stepIndex(r.status)">
           <div class="step" [class.active]="stepIndex(r.status) >= 0">
             <span class="dot">1</span>
             <span class="step-lbl">Received</span>
@@ -44,17 +44,17 @@
 
         <!-- Status message -->
         @if (r.status === 'new') {
-          <div class="status-msg pending">
+          <div class="status-msg pending" appReveal [revealDelay]="180">
             <h3>We've received your booking</h3>
             <p>Glen is reviewing it and will confirm your slot soon. Check back here, or watch for our call.</p>
           </div>
         } @else if (r.status === 'confirmed') {
-          <div class="status-msg confirmed">
+          <div class="status-msg confirmed" appReveal [revealDelay]="180">
             <h3>✓ Your booking is confirmed!</h3>
             <p>See you on <strong>{{ longDate(r.preferred_date) }}</strong> during the <strong>{{ slotLabel(r.time_slot) }}</strong> slot.</p>
           </div>
         } @else {
-          <div class="status-msg done">
+          <div class="status-msg done" appReveal [revealDelay]="180">
             <h3>This job is complete</h3>
             <p>Thanks for trusting GT Garage. We hope your car's running great — see you next time!</p>
           </div>
@@ -69,12 +69,12 @@
         }
 
         <!-- Details -->
-        <div class="details">
+        <div class="details" appReveal [revealDelay]="270">
           <div><span>Preferred date</span>{{ longDate(r.preferred_date) }}</div>
           <div><span>Time slot</span>{{ slotLabel(r.time_slot) }}</div>
         </div>
 
-        <div class="result-actions">
+        <div class="result-actions" appReveal [revealDelay]="360">
           <button class="btn btn-ghost dark" (click)="reset()">Check another booking</button>
           <a routerLink="/book" class="btn btn-primary">Book again</a>
         </div>

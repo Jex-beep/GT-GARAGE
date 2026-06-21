@@ -24,8 +24,17 @@
   min-height: min(94vh, 940px);
   display: flex;
   align-items: center;
+  perspective: 1400px;
+  /* pointer (-1..1 each axis) + raw scrollY — set from home.ts, default 0 so
+     every transform below resolves to identity when JS / motion is off */
+  --px: 0; --py: 0; --sy: 0;
 }
-.hero-bg { position: absolute; inset: 0; z-index: 0; }
+/* scroll parallax — bleeds past the section so the drift never reveals an edge */
+.hero-bg {
+  position: absolute; inset: -9% 0 0; height: 118%; z-index: 0;
+  transform: translate3d(0, calc(var(--sy) * .06px), 0);
+  will-change: transform;
+}
 .hero-photo {
   width: 100%; height: 100%;
   object-fit: cover; object-position: center;
@@ -44,6 +53,9 @@
   width: 62%; height: 90%;
   background: radial-gradient(circle, rgba(30,155,255,.24), transparent 62%);
   pointer-events: none;
+  transform: translate3d(calc(var(--px) * 26px), calc(var(--py) * 26px), 0);
+  transition: transform .35s var(--ease-out);
+  will-change: transform;
 }
 /* faint engineered grid, vignetted so it only whispers near the gauge */
 .hero-bg::after {
@@ -62,6 +74,15 @@
   position: relative; z-index: 1;
   display: grid; grid-template-columns: 1.12fr .88fr; gap: 56px;
   align-items: center; width: 100%;
+  /* drift up slower than the page + fade as the hero leaves the viewport */
+  transform: translate3d(0, calc(var(--sy) * .05px), 0);
+  opacity: clamp(0, calc(1 - var(--sy) / 760), 1);
+  will-change: transform, opacity;
+}
+/* the copy block leans toward the cursor for a parallax sense of depth */
+.hero-copy {
+  transform: translate3d(calc(var(--px) * 8px), calc(var(--py) * 5px), 0);
+  transition: transform .35s var(--ease-out);
 }
 
 .ani-in { opacity: 0; transform: translateY(22px); animation: faderise .8s var(--ease-out) forwards; animation-delay: var(--d, 0ms); }
@@ -112,23 +133,14 @@
 .ht-item span { font-size: 0.74rem; text-transform: uppercase; letter-spacing: .1em; color: var(--steel-300); margin-top: 4px; display: block; }
 .ht-divider { width: 1px; height: 38px; background: linear-gradient(transparent, rgba(255,255,255,.22), transparent); }
 
-/* Gauge framed as a glass instrument cluster so it reads as intentional */
+/* Gauge — bare instrument dial floating on the hero, no card frame */
 .hero-side { display: grid; place-items: center; }
 .gauge-card {
   position: relative;
-  padding: 30px;
-  border-radius: 24px;
-  background: radial-gradient(120% 120% at 50% 30%, rgba(38,48,60,.55), rgba(11,13,16,.72));
-  border: 1px solid rgba(255,255,255,.1);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.1),
-    inset 0 0 60px rgba(0,0,0,.5),
-    0 40px 80px -28px rgba(0,0,0,.75);
-  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
   animation: floaty 7s ease-in-out infinite;
 }
 @media (prefers-reduced-motion: reduce) { .gauge-card { animation: none; } }
-.gauge { width: 100%; max-width: 360px; display: block; filter: drop-shadow(0 14px 30px rgba(0,0,0,.45)); }
+.gauge { width: 100%; max-width: 430px; display: block; filter: drop-shadow(0 18px 38px rgba(0,0,0,.55)); }
 .needle { transform-origin: 150px 150px; transform: rotate(-120deg); animation: sweep 2.6s var(--ease-out) .4s forwards; }
 @keyframes sweep { 0% { transform: rotate(-120deg); } 62% { transform: rotate(70deg); } 100% { transform: rotate(48deg); } }
 @media (prefers-reduced-motion: reduce) { .needle { animation: none; transform: rotate(48deg); } }
@@ -148,7 +160,8 @@
   position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
   width: 26px; height: 42px; border: 2px solid rgba(255,255,255,.35); border-radius: 14px;
   display: grid; justify-items: center; padding-top: 7px; z-index: 2;
-  transition: border-color .25s;
+  transition: border-color .25s, opacity .2s;
+  opacity: clamp(0, calc(1 - var(--sy) / 240), 1); /* fades the moment you scroll */
 }
 .scroll-cue:hover { border-color: var(--blue); }
 .scroll-cue span { width: 4px; height: 8px; background: var(--blue); border-radius: 2px; animation: scrolldot 1.6s infinite; }
@@ -160,9 +173,12 @@
   padding: 22px 0;
   border-top: 1px solid rgba(255,255,255,.06);
   border-bottom: 1px solid rgba(255,255,255,.06);
-  /* fade the edges so logos glide in/out instead of clipping hard */
-  -webkit-mask: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
-          mask: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+/* Fade only the scrolling content at the edges. Masking .makes itself made the
+   dark band transparent there and revealed the white page behind it. */
+.makes .marquee {
+  -webkit-mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+          mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
 }
 .make { font-family: var(--font-display); font-size: 1.15rem; letter-spacing: .14em; color: var(--steel-300); padding: 0 26px; white-space: nowrap; transition: color .2s; }
 .make-dot { color: var(--blue); font-size: .42rem; align-self: center; }
@@ -385,7 +401,6 @@
   .hero-inner { grid-template-columns: 1fr; gap: 38px; }
   /* Hide the decorative gauge on mobile so the headline + CTA stay above the fold */
   .hero-side { display: none; }
-  .hero { min-height: 86vh; }
   .steps { grid-template-columns: 1fr; }
   .step-arrow { transform: rotate(90deg); justify-self: center; }
   .work-strip { grid-template-columns: 1fr; }

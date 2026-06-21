@@ -147,6 +147,18 @@ section.block { padding: clamp(60px, 9vw, 100px) 0; }
 .reveal.reveal-fade  { transform: none; }
 .reveal.in { opacity: 1; transform: none; }
 
+/* ── PAGE-HERO ENTRANCE (every page's hero animates in on load) ────────── */
+.page-hero .eyebrow,
+.page-hero h1,
+.page-hero p {
+  opacity: 0;
+  animation: heroRise .7s var(--ease-out) forwards;
+}
+.page-hero .eyebrow { animation-delay: .05s; }
+.page-hero h1       { animation-delay: .18s; }
+.page-hero p        { animation-delay: .31s; }
+@keyframes heroRise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+
 /* ── MARQUEE ──────────────────────────────────────────────────────────── */
 .marquee { display: flex; overflow: hidden; }
 /* Two identical groups, each scrolling a full -100% → seamless loop at any width */
@@ -161,6 +173,7 @@ section.block { padding: clamp(60px, 9vw, 100px) 0; }
 /* ── REDUCED MOTION ───────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
+  .page-hero .eyebrow, .page-hero h1, .page-hero p { opacity: 1; animation: none; }
   html { scroll-behavior: auto; }
   .marquee-group { animation: none; }
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }

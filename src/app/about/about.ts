@@ -16,7 +16,7 @@ export class About implements OnInit {
   ngOnInit() {
     this.seo.update({
       title: "About GT Garage — Mabalacat's Trusted Auto Shop",
-      description: 'Owner Glen Tuazon has run GT Garage in Mabalacat, Pampanga since 2021 on one rule: do the job right and tell the truth about it. Find us at 183 Orange Street, San Francisco.',
+      description: 'Owner Glen Tuazon has run GT Garage in Mabalacat, Pampanga since 2016 on one rule: do the job right and tell the truth about it. Find us at 183 Orange Street, San Francisco.',
       path: '/about',
     });
   }

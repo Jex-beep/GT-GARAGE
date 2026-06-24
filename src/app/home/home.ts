@@ -104,7 +104,7 @@ export class Home implements OnInit {
   async ngOnInit() {
     this.seo.update({
       title: 'GT Garage — Honest Auto Repair in Mabalacat, Pampanga',
-      description: 'Trusted auto repair in Mabalacat, Pampanga since 2021. Diagnostics, brakes, transmission, aircon and tune-ups for all makes and models. Book online — Maya accepted.',
+      description: 'Trusted auto repair in Mabalacat, Pampanga since 2016. Diagnostics, brakes, transmission, aircon and tune-ups for all makes and models. Book online — Maya accepted.',
       path: '/',
     });
     try {

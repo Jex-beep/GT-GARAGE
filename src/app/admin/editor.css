@@ -46,6 +46,7 @@
 .ed-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .ed-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
 .ed-field.full { grid-column: 1 / -1; }
+.ed-subfield { display: flex; flex-direction: column; gap: 6px; margin-top: 12px; }
 .ed-field label { font-family: var(--font-display); text-transform: uppercase; font-size: .8rem; letter-spacing: .05em; color: var(--steel-700); }
 .ed-field label .hint { text-transform: none; letter-spacing: 0; color: var(--steel-300); font-family: var(--font-body); font-size: .78rem; }
 .ed-field input, .ed-field textarea, .ed-field select {

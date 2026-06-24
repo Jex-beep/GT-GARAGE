@@ -82,6 +82,10 @@ export class RichEditor implements AfterViewInit, OnDestroy {
         const { url } = await this.api.uploadImage(file, token);
         this.quill.deleteText(range.index, 'Uploading image…'.length);
         this.quill.insertEmbed(range.index, 'image', url, 'user');
+        // Ask the admin to describe every image (alt text) for screen readers + SEO
+        const alt = (window.prompt(
+          'Describe this image (alt text) — helps screen readers and SEO:', '') || '').trim();
+        if (alt) this.quill.formatText(range.index, 1, 'alt', alt, 'user');
         this.quill.setSelection(range.index + 1, 0);
       } catch {
         this.quill.deleteText(range.index, 'Uploading image…'.length);

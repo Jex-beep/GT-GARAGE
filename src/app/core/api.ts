@@ -15,7 +15,7 @@ export interface ServiceFull {
 }
 export interface BlogPost {
   id: string; title: string; slug: string; excerpt: string;
-  body: string; cover_url: string | null; published_at: string | null;
+  body: string; cover_url: string | null; cover_alt: string | null; published_at: string | null;
 }
 export interface Booking {
   id: string; created_at: string; customer_name: string; phone: string;

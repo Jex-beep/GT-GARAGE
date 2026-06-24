@@ -26,6 +26,13 @@
       <div class="ed-field">
         <label>Cover image <span class="hint">(optional)</span></label>
         <app-image-upload [value]="form.cover_url" (valueChange)="form.cover_url = $event" />
+        @if (form.cover_url) {
+          <div class="ed-subfield">
+            <label for="pcoveralt">Image alt text <span class="hint">(describe the photo for screen readers &amp; SEO)</span></label>
+            <input id="pcoveralt" name="pcoveralt" [(ngModel)]="form.cover_alt"
+              placeholder="e.g. Mechanic checking a car's brake pads">
+          </div>
+        }
       </div>
       <div class="ed-field full">
         <label for="pexc">Excerpt <span class="hint">(short summary on the blog list)</span></label>

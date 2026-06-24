@@ -33,6 +33,7 @@ export const postSchema = z.object({
   excerpt:      z.string().trim().min(1),
   body:         z.string().trim().min(1),
   cover_url:    z.string().trim().optional().nullable(),
+  cover_alt:    z.string().trim().max(300).optional().nullable(),
   published_at: z.string().datetime({ offset: true }).optional().nullable(),
 });
 

@@ -34,7 +34,7 @@
         @for (p of posts(); track p.id) {
           <a class="post-card" appReveal [revealDelay]="$index * 70" [routerLink]="['/blogs', p.slug]">
             <div class="thumb" [class.has-img]="p.cover_url">
-              @if (p.cover_url) { <img [src]="p.cover_url" [alt]="p.title"> }
+              @if (p.cover_url) { <img [src]="p.cover_url" [alt]="p.cover_alt || p.title"> }
               @else { <span class="ph">GT</span> }
             </div>
             <div class="meta">

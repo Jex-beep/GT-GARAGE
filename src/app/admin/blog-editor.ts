@@ -7,7 +7,7 @@ import { ImageUpload } from '../core/image-upload';
 
 interface PostForm {
   title: string; slug: string; excerpt: string; body: string;
-  cover_url: string; published: boolean;
+  cover_url: string; cover_alt: string; published: boolean;
 }
 
 @Component({
@@ -33,7 +33,7 @@ export class BlogEditor implements OnInit {
   async ngOnInit() { await this.load(); }
 
   private blank(): PostForm {
-    return { title: '', slug: '', excerpt: '', body: '', cover_url: '', published: false };
+    return { title: '', slug: '', excerpt: '', body: '', cover_url: '', cover_alt: '', published: false };
   }
 
   async load() {
@@ -53,7 +53,7 @@ export class BlogEditor implements OnInit {
   startEdit(p: BlogPost) {
     this.form = {
       title: p.title, slug: p.slug, excerpt: p.excerpt, body: p.body,
-      cover_url: p.cover_url ?? '', published: !!p.published_at,
+      cover_url: p.cover_url ?? '', cover_alt: p.cover_alt ?? '', published: !!p.published_at,
     };
     this.editingPublishedAt = p.published_at;
     this.editingId.set(p.id); this.showForm.set(true); this.error.set('');
@@ -87,7 +87,9 @@ export class BlogEditor implements OnInit {
 
     const payload = {
       title: f.title.trim(), slug, excerpt: f.excerpt.trim(), body: f.body.trim(),
-      cover_url: f.cover_url.trim() || null, published_at,
+      cover_url: f.cover_url.trim() || null,
+      cover_alt: f.cover_url.trim() ? (f.cover_alt.trim() || null) : null,
+      published_at,
     };
 
     this.saving.set(true); this.error.set('');
